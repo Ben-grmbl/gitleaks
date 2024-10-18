@@ -13,7 +13,7 @@ func AWS() *config.Rule {
 		Description: "Identified a pattern that may indicate AWS credentials, risking unauthorized cloud resource access and data breaches on AWS platforms.",
 		RuleID:      "aws-access-token",
 		Regex: regexp.MustCompile(
-			"(?:A3T[A-Z0-9]|AKIA|ASIA|ABIA|ACCA)[A-Z0-9]{16}"),
+			`\b(?:A3T[A-Z0-9]|AKIA|ASIA|ABIA|ACCA)[A-Z0-9]{16}\b`),
 		Keywords: []string{
 			"AKIA",
 			"ASIA",
@@ -24,5 +24,11 @@ func AWS() *config.Rule {
 
 	// validate
 	tps := []string{utils.GenerateSampleSecret("AWS", "AKIALALEMEL33243OLIB")} // gitleaks:allow
-	return utils.Validate(r, tps, nil)
+	fps := []string{
+		// wrong length to be a valid AWS key
+		"ASIASIASIASIASIASIASIASIASIASI", // gitleaks:allow
+		"AACCAACCAACCAACCAACCAACCAACCAA", // gitleaks:allow
+	}
+
+	return utils.Validate(r, tps, fps)
 }
