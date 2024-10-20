@@ -13,7 +13,7 @@ func AWS() *config.Rule {
 	r := config.Rule{
 		Description: "Identified a pattern that may indicate AWS credentials, risking unauthorized cloud resource access and data breaches on AWS platforms.",
 		RuleID:      "aws-access-token",
-		Regex:       utils.GenerateUniqueTokenRegex("(A3T[A-Z0-9]|AKIA|ASIA|ABIA|ACCA)[A-Z0-9]{16}", false),
+		Regex:       utils.GenerateUniqueTokenRegex("(?:A3T[A-Z0-9]|AKIA|ASIA|ABIA|ACCA)[A-Z0-9]{16}", false),
 		Entropy:     3,
 		Keywords: []string{
 			// https://docs.aws.amazon.com/IAM/latest/UserGuide/reference_identifiers.html#identifiers-unique-ids
