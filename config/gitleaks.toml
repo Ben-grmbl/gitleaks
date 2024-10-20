@@ -157,6 +157,7 @@ keywords = [
 ]
 # NOTE: Gitleaks >= v8.21.0 should use [[rules.allowlists] instead.
 [rules.allowlist]
+condition = "OR"
 regexes = [
     '''.+EXAMPLE$''',
 ]
@@ -279,6 +280,7 @@ regex = '''\bcurl\b(?:.*|.*(?:[\r\n]{1,2}.*){1,5})[ \t\n\r](?:-u|--user)[ =](?:(
 keywords = ["curl"]
 # NOTE: Gitleaks >= v8.21.0 should use [[rules.allowlists] instead.
 [rules.allowlist]
+condition = "OR"
 regexes = [
     '''[^:]+:(changeme|pass(word)?|pwd|\*+|x+)''',
     '''<[^>]+>:<[^>]+>|<[^:]+:[^>]+>''',
@@ -519,10 +521,12 @@ keywords = [
 ]
 # NOTE: Gitleaks >= v8.21.0 should use [[rules.allowlists] instead.
 [rules.allowlist]
+condition = "OR"
 regexTarget = "match"
 regexes = [
     '''(?i)(public[_.-]?(key|token)|(api|client)[_.-]?(version|id)|(secret|client)[_.-]?name|key[_.-]?word|monkey|donkey|keyboard|keying|keystone|rapid|capital)''',
-]stopwords = [
+]
+stopwords = [
     "000000",
     "aaaaaa",
     "about",
@@ -2218,6 +2222,7 @@ path = '''(?i)\.ya?ml$'''
 keywords = ["secret"]
 # NOTE: Gitleaks >= v8.21.0 should use [[rules.allowlists] instead.
 [rules.allowlist]
+condition = "OR"
 regexes = [
     '''[\w.-]+:(?:[ \t]*(?:\||>[-+]?)\s+)?[ \t]*(?:\{\{[ \t\w"|$:=,.-]+}}|""|'')''',
 ]
@@ -2404,6 +2409,7 @@ entropy = 1
 keywords = ["<add key="]
 # NOTE: Gitleaks >= v8.21.0 should use [[rules.allowlists] instead.
 [rules.allowlist]
+condition = "OR"
 regexes = [
     '''33f!!lloppa''',
     '''hal\+9ooo_da!sY''',
@@ -2734,6 +2740,7 @@ entropy = 3
 keywords = ["sumo"]
 # NOTE: Gitleaks >= v8.21.0 should use [[rules.allowlists] instead.
 [rules.allowlist]
+condition = "OR"
 regexTarget = "line"
 regexes = [
     '''sumOf''',
@@ -2823,6 +2830,7 @@ keywords = [
 ]
 # NOTE: Gitleaks >= v8.21.0 should use [[rules.allowlists] instead.
 [rules.allowlist]
+condition = "OR"
 regexes = [
     '''s\.[A-Za-z]{24}''',
 ]
