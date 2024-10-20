@@ -52,7 +52,7 @@ tags = [
 {{- if eq (len $rule.Allowlists) 1 }}{{ with index $rule.Allowlists 0}}{{ if or .Regexes .Paths .Commits .StopWords }}
 # NOTE: Gitleaks >= v8.21.0 should use [[rules.allowlists] instead.
 [rules.allowlist]
-condition = "{{ .MatchCondition.String }}"
+{{- with .MatchCondition }}{{println}}condition = "{{ .MatchCondition.String }}"{{ end }}
 {{- with .Commits -}}{{println}}commits = [
     {{ range $j, $commit := . }}"{{ $commit }}",{{ end }}
 ]{{ end }}
