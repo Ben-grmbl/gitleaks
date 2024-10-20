@@ -40,12 +40,11 @@ func GenericCredential() *config.Rule {
 				Description:    "Allowlist for Generic API Keys",
 				MatchCondition: config.AllowlistMatchOr,
 				Regexes: []*regexp.Regexp{
-					regexp.MustCompile(`(?i)` +
-						`(public.?key|public.?token` + // public key -> not a secret
-						`|api.?version|client.?version` + // version of api -> not a secret
-						`|api.?id|client.?id` + // generally, the id is not a secret
-						`|secret.?name|client.?name` + // name of secret, not the secret itself
-						`|map.?key|key.?word|monkey|donkey|keyboard|keying|keystone` + // common words containing "key"
+					regexp.MustCompile(`(?i)(` +
+						`public[_.-]?(key|token)` + // public key -> not a secret
+						`|(api|client)[_.-]?(version|id)` + // version/id -> not a secret
+						`|(secret|client)[_.-]?name` + // name of client, name of env variable, ...
+						`|key[_.-]?word|monkey|donkey|keyboard|keying|keystone` + // common words containing "key"
 						`|rapid|capital` + // common words containing "api"
 						`)`),
 				},
@@ -79,7 +78,6 @@ R5: Regulatory--21`,
 		`COMMUNICATION_API_VERSION=rc0.13.0_20230412_0712-SNAPSHOT`,
 		`LLM_SECRET_NAME = "NEXUS-GPT4-API-KEY"`,
 		`keyword: "Befaehigung_P2"`,
-		`<Object mapKey="R648-MF-DEPARTURE">`,
 		`minisat-master-keying:x64-uwp=fail`,
 		`monkeys-audio:mx64-uwp=fail`,
 		`rapidstring:marm64-uwp=fail`,

@@ -521,7 +521,7 @@ keywords = [
 [rules.allowlist]
 regexTarget = "match"
 regexes = [
-    '''(?i)(public.?key|public.?token|api.?version|client.?version|api.?id|client.?id|secret.?name|client.?name|map.?key|key.?word|monkey|donkey|keyboard|keying|keystone|rapid|capital)''',
+    '''(?i)(public[_.-]?(key|token)|(api|client)[_.-]?(version|id)|(secret|client)[_.-]?name|key[_.-]?word|monkey|donkey|keyboard|keying|keystone|rapid|capital)''',
 ]stopwords = [
     "000000",
     "aaaaaa",
