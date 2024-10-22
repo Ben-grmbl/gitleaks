@@ -13,10 +13,10 @@ import (
 
 func (d *Detector) DetectFiles(paths <-chan sources.ScanTarget) ([]report.Finding, error) {
 	for pa := range paths {
+		p := pa
 		d.Sema.Go(func() error {
-			logger := log.With().Str("path", pa.Path).Logger()
-			log.Trace().Msgf("Scanning path: %s", pa)
-			f, err := os.Open(pa.Path)
+
+			f, err := os.Open(p.Path)
 			if err != nil {
 				return err
 			}
@@ -31,9 +31,7 @@ func (d *Detector) DetectFiles(paths <-chan sources.ScanTarget) ([]report.Findin
 			if d.MaxTargetMegaBytes > 0 {
 				rawLength := fileSize / 1000000
 				if rawLength > int64(d.MaxTargetMegaBytes) {
-					logger.Debug().
-						Int64("size", rawLength).
-						Msgf("Skipping file: exceeds --max-target-megabytes")
+					log.Debug().Msgf("skipping file: %s scan due to size: %d", p.Path, rawLength)
 					return nil
 				}
 			}
@@ -64,10 +62,10 @@ func (d *Detector) DetectFiles(paths <-chan sources.ScanTarget) ([]report.Findin
 				totalLines += linesInChunk
 				fragment := Fragment{
 					Raw:      string(buf[:n]),
-					FilePath: pa.Path,
+					FilePath: p.Path,
 				}
-				if pa.Symlink != "" {
-					fragment.SymlinkFile = pa.Symlink
+				if p.Symlink != "" {
+					fragment.SymlinkFile = p.Symlink
 				}
 				for _, finding := range d.Detect(fragment) {
 					// need to add 1 since line counting starts at 1

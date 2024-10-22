@@ -1,12 +1,12 @@
 package sources
 
 import (
-	"github.com/rs/zerolog/log"
 	"io/fs"
 	"os"
 	"path/filepath"
 
 	"github.com/fatih/semgroup"
+	"github.com/rs/zerolog/log"
 )
 
 type ScanTarget struct {
@@ -35,12 +35,7 @@ func DirectoryTargets(source string, s *semgroup.Group, followSymlinks bool) (<-
 						Symlink: "",
 					}
 				}
-				if fInfo.Mode().Type() == fs.ModeSymlink {
-					if !followSymlinks {
-						log.Debug().Str("path", path).Msg("Skipping symlink")
-						return nil
-					}
-
+				if fInfo.Mode().Type() == fs.ModeSymlink && followSymlinks {
 					realPath, err := filepath.EvalSymlinks(path)
 					if err != nil {
 						return err
